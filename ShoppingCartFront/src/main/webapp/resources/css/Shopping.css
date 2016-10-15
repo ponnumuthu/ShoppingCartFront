@@ -1,0 +1,22 @@
+  .asd
+  {
+   font-size:25;
+   font-family:Magneto;
+  }
+  
+  .search{
+    box-sizing: border-box;
+    border: 2px solid #aaa;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: white;
+    background-image: url("src/main/webapp/resources/css/search1.jpg");
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    padding: 12px 20px 12px 40px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+     display: block;
+    margin: auto;
+    width: 40%;
+}
