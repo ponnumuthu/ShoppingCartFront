@@ -1,11 +1,9 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@include file="/WEB-INF/views/header.jsp" %>
-<%@include file="/WEB-INF/views/menu.jsp" %>
 
 
 <h4>List of available Suppliers</h4>
 
-<table width="50%">
+<table width="50%" class="table table-hover">
 	<tr>
 	    <th align="left">S.No</th>
 		<th align="left">Id</th>

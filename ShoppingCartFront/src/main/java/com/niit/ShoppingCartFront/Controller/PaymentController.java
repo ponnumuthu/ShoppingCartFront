@@ -4,18 +4,22 @@ import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.niit.shoppingcartback.dao.CartDAO;
+import com.niit.shoppingcartback.dao.CategoryDAO;
 import com.niit.shoppingcartback.dao.CreditCardDAO;
 import com.niit.shoppingcartback.dao.ProductDAO;
 import com.niit.shoppingcartback.dao.ShippingAddressDAO;
 import com.niit.shoppingcartback.dao.UserDAO;
 import com.niit.shoppingcartback.model.Cart;
+import com.niit.shoppingcartback.model.Category;
 import com.niit.shoppingcartback.model.CreditCard;
 import com.niit.shoppingcartback.model.ShippingAddress;
 import com.niit.shoppingcartback.model.User;
@@ -24,6 +28,8 @@ import com.niit.shoppingcartback.model.User;
 @SessionAttributes("username")
 public class PaymentController {
 
+	@Autowired
+	private User user;
 	
 	@Autowired(required = true)
 	private ProductDAO productDAO;
@@ -37,8 +43,10 @@ public class PaymentController {
 	@Autowired
 	private Cart cart;
 	
+
+	
 	@Autowired
-	private CreditCardDAO creditCardDAO;
+	private CategoryDAO categoryDAO;
 	
 	@Autowired 
 	private CreditCard creditCard;
@@ -47,28 +55,57 @@ public class PaymentController {
 	private ShippingAddressDAO shippingAddressDAO;
 	
 	
-	@RequestMapping("/Proceed/{username}")
+	@RequestMapping("/cashOnDelivery/{username}")
 	public ModelAndView Proceed (@PathVariable("username") String username){
 		
 		ShippingAddress shippingAddress = shippingAddressDAO.get(username);
 		
-		List<ShippingAddress> shippingAddresses = shippingAddressDAO.list(shippingAddress.getId());
-				
+		List<ShippingAddress> shippingAddresses = shippingAddressDAO.list(shippingAddress.getUsersId());
+		User user = userDAO.get(username);
+		
 		ModelAndView mv = new ModelAndView("/success");
+		mv.addObject("User", user);
 		mv.addObject("shippingAddresses", shippingAddresses);
 		mv.addObject("isPlaceOrderClicked", true);
 		
+
 		
 		return mv;		
 	}
 	
-	@RequestMapping("/paymentMethod/{username}")
+	@RequestMapping("/shippingAddess/{username}")
+	public String createNewAddress(@ModelAttribute ShippingAddress shippingAddress, @PathVariable("username") String username){
+		
+		User user = userDAO.get(username);
+		
+		shippingAddress.setUsersId(user.getUsersId());
+		shippingAddressDAO.saveOrUpdate(shippingAddress);
+		
+		return "redirect:/cashOnDelivery/{username}";
+	}
+	
+	@RequestMapping("/deleteShippingAddress/{shippingId}")
+	public String deleteShippingAddress(@PathVariable("shippingId") String shippingId){
+		
+		shippingAddressDAO.delete(shippingId);
+		return "redirect:/cashOnDelivery/{username}";
+	}
+	
+	@RequestMapping("/editShippingAddress/{shippingId}")
+	public String editShippingAddress(@PathVariable("shippingId") String shippingId, Model model){
+		
+	ShippingAddress shippingAddress = shippingAddressDAO.getByShippingId(shippingId);
+	model.addAttribute("shippingAddress", shippingAddress);
+	
+	return "redirect:/newShippingAddress";
+	}
+	/*@RequestMapping("/paymentMethod/{username}")
 	public ModelAndView paymentMethod(@PathVariable("username") String username){
 		
 		return null;
 		
 	}
-	
+	*/
 	@RequestMapping("/onLinePayment/{username}")
 	public ModelAndView OnLinePayment(@PathVariable("username") String username)
 	{
@@ -81,43 +118,66 @@ public class PaymentController {
 	
 	
 	@RequestMapping("/cardPayment/{username}")
-	private  String cardPayment(@ModelAttribute CreditCard creditCard, @PathVariable ("username") String username){
+	private  String cardPayment(@PathVariable ("username") String username){
 		
-		creditCardDAO.saveOrUpdate(creditCard);
+		//creditCardDAO.saveOrUpdate(creditCard);
 		
 		return "redirect:/cashOnDelivery/{username}";
 	}
 	
 	
-	@RequestMapping("/cashOnDelivery/{username}")
-	public ModelAndView cashOnDelivery(@PathVariable("username") String username)
+	
+	/*@RequestMapping("/editAdress/{shiipingAddress}")
+	public ModelAndView cashOnDelivery(@PathVariable("shiipingAddress") String shiipingAddress)
 	{
-		User user = userDAO.get(username);
+		shippingAddressDAO.getByShippingId(shiipingAddress);
+		
 		ModelAndView mv = new ModelAndView("success");
-		mv.addObject("User", user);
-		mv.addObject("cashOnDeliveryClicked", true);
+		
+		
 		
 		return mv;
+	}*/
+	
+	@RequestMapping("/newShippingAddress")
+	public ModelAndView newAdress(){
+		
+		ModelAndView mv = new ModelAndView("success");
+		mv.addObject("shippingAddress", true);
+		return mv;
 	}
-	@RequestMapping("/shiipingAddess/{username}")
-	public ModelAndView shippingAdresss(@ModelAttribute ShippingAddress shippingAddress, @PathVariable ("username") String username){
+	
+	@RequestMapping("/productDeliverd/{username}")
+	public ModelAndView shippingAdresss(@PathVariable ("username") String username){
 		
 		User user = userDAO.get(username);
-		shippingAddress.setId(user.getId());
-		shippingAddressDAO.saveOrUpdate(shippingAddress);
 		
+	/*	
 		Random t = new Random();
-		int day = t.nextInt(7);
+		int day = 2 + t.nextInt(7);*/
 		
 		ModelAndView mv = new ModelAndView("success");
 		mv.addObject("ProductDelivered", true);
 		mv.addObject("User", user);
-		mv.addObject("day", day);
+		/*mv.addObject("day", day);*/
 		return mv;
 		
+	}	
+	@RequestMapping("/days/{username}")
+	public ModelAndView Days(@PathVariable ("username") String username){
+		
+		User user = userDAO.get(username);
+		
+		List<Cart> cartList = cartDAO.list(user.getUsersId());
+		List<Category> CategoryList = categoryDAO.list();
+		long total = cartDAO.getTotalAmount(user.getUsersId());
+		ModelAndView mv = new ModelAndView("success");
+		mv.addObject("cartList", cartList);
+		mv.addObject("CategoryList", CategoryList);
+		mv.addObject("total", total);
+		mv.addObject("isViewDaysClicked", true);
+		return mv;
 	}
-	
-	
 	
 	@ModelAttribute
 	public void commonObject(Model model){	
@@ -125,5 +185,7 @@ public class PaymentController {
 		model.addAttribute("isLoggedInUser", true);
 		String message = "You Have Successfully Logged In";
 		model.addAttribute("msg", message);
+		List<Category> CategoryList = categoryDAO.list();
+		 model.addAttribute("categoryList",CategoryList);
 	}
 }

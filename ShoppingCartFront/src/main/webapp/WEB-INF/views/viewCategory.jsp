@@ -2,20 +2,22 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 
-<%-- <c:if test="${not empty isEditClicked}">
+<c:if test="${not empty isEditCategoryClicked}">
 <%@include file="/WEB-INF/views/editCategory.jsp" %>
 
-</c:if> --%>
+</c:if>
 
-<form:form action="orderedBy">
-<input type="text" name="search" >
-<input type="submit" name="submit" value="Sort">
+<form:form action="searchCategory">
+<div class="row">
+<h4 style="float: left; margin-left: 2em;">List of available categories</h4>
+<input class="form-control" type="text" name="search" style="width: 25em; float: left; margin-left: 2em;">
+<input type="submit" name="submit" value="Search" class="btn btn-primary" style="float: left;">
+</div>
 </form:form> 
 
-<h1>${msg}</h1>
-<h4>List of available categories</h4>
 
-<table  width="50%">
+
+<table  width="50%" class="table table-hover">
 	<tr>
 	    <th align="left">S.No</th>
 		<th align="left">Id</th>

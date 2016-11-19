@@ -1,3 +1,4 @@
+
 package com.niit.ShoppingCartFront.Controller;
 
 import java.util.List;
@@ -51,17 +52,16 @@ public class CategoryController {
 	 }
 	
 	
-	@RequestMapping("/orderedBy")
+	@RequestMapping("/searchCategory")
 	public ModelAndView orderedBy(@RequestParam(value="search") String search ) {
 		
-		categoryDAO.search(search);
+		List<Category> categoryList = categoryDAO.search(search);		 
 		
-		List<Category> categoryList = categoryDAO.list();
-		
-		ModelAndView mv = new ModelAndView("viewCategory");
+		ModelAndView mv = new ModelAndView("adminHome");
 		
 		mv.addObject("categoryList", categoryList);
-		
+		mv.addObject("isViewCategoriesClicked", true);
+
 		return mv;
 		
 	}
@@ -85,13 +85,10 @@ public class CategoryController {
 	@RequestMapping("/editcategory/{id}")
 	public ModelAndView editCategory(@PathVariable ("id") String id){
 		Category category = categoryDAO.get(id);
-		//categoryDAO.saveOrUpdate(category);
-		
-		ModelAndView mv = new ModelAndView("/editCategory");
+		ModelAndView mv = new ModelAndView("/adminHome");
 		mv.addObject("category", category);
-		/*mv.addObject("ID", category.getId());
-		mv.addObject("Name", category.getName());
-		mv.addObject("Description", category.getDescription());*/
+		mv.addObject("isEditCategoryClicked", true);
+		
 		return mv;
 	}
 	
@@ -116,10 +113,9 @@ public class CategoryController {
 		categoryDAO.saveOrUpdate(category);
 	
 		List<Category> categoryList = categoryDAO.list();
-		ModelAndView mv = new ModelAndView("/viewCategory");
-		
+		ModelAndView mv = new ModelAndView("/adminHome");		
 		mv.addObject("categoryList", categoryList);
-		
+		mv.addObject("isViewCategoriesClicked", true);		
 		return mv;
 	}
 	

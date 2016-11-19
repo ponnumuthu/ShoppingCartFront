@@ -14,23 +14,18 @@
 		<c:when
 			test="${not empty isMyCartClicked || not empty isAddToCartClicked }">
 			<%@include file="/WEB-INF/views/myCart.jsp"%>
-		</c:when>
-		<c:when
-			test="${not empty isProductClicked && empty isLoggedInUser}">
-			<h1>you have to login first</h1>
-		<h1>${username}</h1>
-		</c:when>
+		</c:when>		
 		<c:when
 			test="${not empty isProductClicked && not empty isLoggedInUser}">
 			<%@include file="/WEB-INF/views/productDetails.jsp"%>
 		</c:when>
-		 
+		
 		<c:when test="${not empty onLinePaymentClicked}">
 			<%@include file="/WEB-INF/views/creditCard.jsp"%>
 
 		</c:when>
 		
-		<c:when test="${not empty cashOnDeliveryClicked}">
+		<c:when test="${not empty shippingAddress}">
 			<%@include file="/WEB-INF/views/shippingAddress.jsp"%>
 		</c:when>
 
@@ -39,7 +34,11 @@
 		</c:when>
 		
 		<c:when test="${not empty isPlaceOrderClicked}">
-			<%@include file="/WEB-INF/views/deliverWhere.jsp"%>
+			<%@include file="/WEB-INF/views/deliverAddress.jsp"%>
+		</c:when>
+		
+		<c:when test="${not empty isViewDaysClicked}">
+			<%@include file="/WEB-INF/views/cartDetails.jsp"%>
 		</c:when>
 		
 		<c:otherwise>

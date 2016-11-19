@@ -1,13 +1,18 @@
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@include file="/WEB-INF/views/header.jsp" %>
-<%@include file="/WEB-INF/views/menu.jsp" %>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 
 
 
-<h4>List of available Products</h4>
+<form:form action="searchProduct">
+<div class="row">
+<h4 style="float: left; margin-left: 2em;">List of available Products</h4>
+<input class="form-control" type="text" name="search" style="width: 25em; float: left; margin-left: 2em;">
+<input type="submit" name="submit" value="Search" class="btn btn-primary" style="float: left;">
+</div>
+</form:form> 
 
-<table width="50%" ng-app="" >
+
+<table width="50%" ng-app="" class="table table-hover">
 	<tr>
  <th align="left">S.No</th>
 		<th align="left">Id</th>

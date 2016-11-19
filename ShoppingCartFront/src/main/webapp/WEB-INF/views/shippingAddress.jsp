@@ -1,11 +1,9 @@
 <%@include file="/WEB-INF/views/header.jsp" %>
 
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-
 <div ng-app="">
 
-<div style="margin-right: 15em;" align="center" >
-	<form:form method="post" action="../shiipingAddess/${username}" onsubmit=" ">
+<div style="margin-left: 15em;" align="center" >
+	<form:form method="post" action="shippingAddess/${username}" onsubmit=" ">
 		<table align="center">
 		<tr>
 		<td colspan="1" align="center"><h3>Shipping Address </h3></td>
@@ -13,7 +11,7 @@
 			
 			<tr>
 				<td>User Name :</td>			
-				<td><input class="form-control" type="text" name="name" id="user" value="${User.username}"/>
+				<td style="width: 25em;"><input class="form-control" type="text" name="username" id="user" value="${User.username}"/>
 			</tr>
 			
 			<tr>
@@ -26,7 +24,7 @@
 			</tr>
 			<tr>
 				<td>Address :</td>				
-				<td><input class="form-control" type="text" name="address" id="address" value="${User.adress}"/></td>
+				<td><input class="form-control" type="text" name="adress" id="address" value="${User.adress}"/></td>
 			</tr>
 			
 			<tr>

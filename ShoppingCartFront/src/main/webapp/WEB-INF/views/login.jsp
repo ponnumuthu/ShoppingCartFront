@@ -10,8 +10,8 @@
 		</tr>
 		
 			<tr>
-				<td class="col-lg-3 col-lf-offset-1 col-sm-3 col-sm-offset-1"><b>UserName:</b></td>
-				<td><input class="form-control" type="text" name="username"></td>
+				<td class="col-lg-3 col-lf-offset-1 col-sm-3 col-sm-offset-1"><b>Email Id:</b></td>
+				<td><input class="form-control" type="text" name="emailid"></td>
 			</tr>
 
 
@@ -19,21 +19,22 @@
 				<td class="col-lg-3 col-lf-offset-1 col-sm-3 col-sm-offset-1"><b>Password:</b></td>
 				<td> <input class="form-control" type="password" name="password" /></td>
 			</tr>
-			 <c:if test="${empty error}">
-			<div class="error">${error}</div>
-	 </c:if> 
-		<c:if test="${not empty msg}">
-			<div class="msg">${msg}</div>
-		</c:if>
-				<tr>
-				<td colspan="2" align="center"><b>${message}</b></td>
+			<tr>
+			<td colspan="2" align="center" >
+			 <c:if test="${not empty error}">
+				<div class="error"><b>${error}</b></div>
+	 			</c:if> 
+				<c:if test="${not empty logout}">
+			<div class="msg"><b>${logout}</b></div>
+				</c:if>				
+				<b>${message}</b></td>
 				</tr>
 			<tr>
 				<td class="col-lg-3 col-lf-offset-1 col-sm-3 col-sm-offset-1"><a href="register">New User?</a></td>
 				<td align="center">
 				 <div class="col-lg-5  col-sm-4 ">
 				<input type="submit" class="btn btn-success">
-				<a href="#"><button class="btn btn-danger">Cancel</button></a>
+				
 				
 				</div>
 				

@@ -1,6 +1,5 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@include file="/WEB-INF/views/header.jsp" %>
-<%@include file="/WEB-INF/views/menu.jsp" %>
+
 
 <h2 style="font-family: magneto" align="center">ADD Supplier</h2>
 

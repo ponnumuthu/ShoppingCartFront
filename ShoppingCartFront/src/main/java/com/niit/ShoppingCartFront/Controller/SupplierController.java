@@ -23,7 +23,9 @@ public class SupplierController {
 
 	@RequestMapping("/addsupplier")
 	public ModelAndView newSupplier() {
-		return new ModelAndView("newSupplier");
+		ModelAndView mv = new ModelAndView("adminHome");
+		mv.addObject("isAddSupplierClicked", true);
+		return mv;
 	 }
 	
 	@RequestMapping("/newSupplier")
@@ -40,17 +42,19 @@ public class SupplierController {
 		
 		List<Supplier> supplierList = supplierDAO.list();
 		
-		ModelAndView mv = new ModelAndView("viewSupplier");
+		ModelAndView mv = new ModelAndView("adminHome");
 		mv.addObject("supplierList", supplierList);
-
+		mv.addObject("isViewSupplierClicked", true);
+		
 		return mv;
 		
 	}
 		@RequestMapping("/editSupplier/{id}")
 		public ModelAndView viewSupplier(@PathVariable ("id") String id) {
 				Supplier supplier = supplierDAO.get(id);
-				ModelAndView mv = new ModelAndView("editSupplier");
+				ModelAndView mv = new ModelAndView("adminHome");
 				mv.addObject("supplier", supplier);
+				mv.addObject("isEditSupplierClicked", true);
 		  return mv;
 		  
 		 }
@@ -60,8 +64,9 @@ public class SupplierController {
 			supplierDAO.saveOrUpdate(supplier);
 			List<Supplier> supplierList = supplierDAO.list();
 			
-			ModelAndView mv = new ModelAndView("/viewSupplier");
+			ModelAndView mv = new ModelAndView("/adminHome");
 			mv.addObject("supplierList", supplierList);
+			mv.addObject("isViewSupplierClicked", true);
 			return mv;
 
 		}
@@ -75,8 +80,9 @@ public class SupplierController {
 		}
 		
 		@ModelAttribute
-		public void commonToSupplier(Model model){
+		public void commonToCategory(Model model){
 			 model.addAttribute("isLoggedInAdmin", true);
 		}
+		
 	}
 

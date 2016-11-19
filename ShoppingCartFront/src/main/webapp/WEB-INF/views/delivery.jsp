@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>Haaaai</h1>
-<h2>Your Product Delivered with in ${day} days</h2>
+
+<h2 style="margin-left: 10em;">Your Product Delivered with in <a href="../days/${username}" >few</a> days</h2>
 </body>
 </html>

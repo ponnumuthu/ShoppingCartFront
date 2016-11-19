@@ -40,9 +40,10 @@ public class ProductController {
 		
 		List<Category> categoryList = categoryDAO.list();
 		List<Supplier> supplierList = supplierDAO.list();
-	ModelAndView mv = new ModelAndView("/newProduct");
+	ModelAndView mv = new ModelAndView("/adminHome");
 	mv.addObject("categoryList", categoryList);
 	mv.addObject("supplierList", supplierList);
+	mv.addObject("isAddProductClicked", true);
 	return mv;
 	 }
 	
@@ -63,8 +64,9 @@ public class ProductController {
 
 		List<Product> List = productDAO.list();
 		
-		ModelAndView mv = new ModelAndView("/viewProduct");
+		ModelAndView mv = new ModelAndView("/adminHome");
 		mv.addObject("productList", List);
+		mv.addObject("isViewProductClicked", true);
 
 		return mv;
 	}
@@ -74,8 +76,9 @@ public class ProductController {
 	@RequestMapping("/editProduct/{id}")
 	public ModelAndView editProduct(@PathVariable ("id") String id){
 		Product product = productDAO.get(id);
-		ModelAndView mv = new ModelAndView("/editProduct");
+		ModelAndView mv = new ModelAndView("/adminHome");
 		mv.addObject("Product", product);
+		mv.addObject("isEditProductClicked", true);
 		return mv;
 	}	
 	
@@ -84,8 +87,9 @@ public class ProductController {
 	public ModelAndView editAndSave(@ModelAttribute ("Product") Product product){
 		productDAO.saveOrUpdate(product);
 		List<Product> List = productDAO.list();
-		ModelAndView mv = new ModelAndView("viewProduct");
+		ModelAndView mv = new ModelAndView("adminHome");
 		mv.addObject("productList", List);
+		mv.addObject("isViewProductClicked", true);
 		return mv;
 	}
 	
@@ -99,6 +103,15 @@ public class ProductController {
 	return "redirect:/viewProducts";
 	}
 	
+	@RequestMapping("/searchProduct")
+	public ModelAndView searchProduct(@RequestParam(value="search") String search ) {
+	
+		List<Product> List = productDAO.search(search);
+		ModelAndView mv = new ModelAndView("adminHome");
+		mv.addObject("productList", List);
+		mv.addObject("isViewProductClicked", true);
+		return mv;
+	}
 	
 	@ModelAttribute
 	public void commonToProduct(Model model){

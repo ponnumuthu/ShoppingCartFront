@@ -240,7 +240,9 @@ table {
 input[type=text], input[type=password], input[type=email], select {
 	width: 50%;
 }
-
+#creditcard{
+width: 107%;
+}
  div.address{
     margin: 5px;
     border: 1px solid #ccc;
@@ -256,7 +258,7 @@ div.desc {
     padding: 15px;
     text-align: center;
 }
-.deliverWhr{
+.deliveraddress{
 margin-right: 2em;  
 margin-top: 1.5em; 
 text-align: right; 

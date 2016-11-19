@@ -2,11 +2,27 @@
 
 <html>
 <head>
-<script	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js">
-	
-	
-	
-	</script>
+<script	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+<script type="text/javascript">
+var app = angular.module('myApp',[]);
+app.controller("UserController", function ($scope,$http) {
+	$scope.getdata = function () {
+		$http({
+			method : 'GET',
+			url : 'checkUser'
+		}).success(function (data, status, headers, config) {
+			$scope.result = data;
+			
+		}).error(function (data, status, headers, config) {
+			
+		})
+	}
+});
+
+
+</script>
+
 <style type="text/css">
 .confirmpassword.compare-to {
 	background-color: lightgreen;
@@ -32,7 +48,7 @@
 </style>
 </head>
 <body>
-	<div ng-app="">
+	<div ng-app="myApp">
 
 		<div style="margin-left: 30%" align="center">
 			<form:form method="post" action="newuser"
@@ -101,8 +117,8 @@
 					<tr>
 						<td><a href="loginpage">Existing User</a></td>
 						<td align="left"><input class="btn btn-success" type="submit"
-							value="submit"> <input class="btn btn-danger"
-							type="button" value="Cancel"></td>
+							value="submit"> <a href="loginpage"><input class="btn btn-danger"
+							type="button" value="Cancel"></a></td>
 					</tr>
 				</table>
 			</form:form>

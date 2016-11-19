@@ -3,13 +3,13 @@ package com.niit.ShoppingCartFront.Controller;
 import java.security.Principal;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -22,11 +22,10 @@ import com.niit.shoppingcartback.model.Category;
 import com.niit.shoppingcartback.model.Product;
 import com.niit.shoppingcartback.model.User;
 import com.niit.shoppingcartback.model.UserRole;
-import com.niit.shoppingcartback.model.Users;
 
 
 @Controller
-@SessionAttributes("username")
+@SessionAttributes({"username","usersId"})
 public class UserController {
 
 	@Autowired(required = true)
@@ -102,14 +101,18 @@ public class UserController {
 	
 	@RequestMapping("/afterlogin")
 	String loginProcess(Principal p,Model model,@RequestParam(value = "error", required = false) String error,
-			@RequestParam(value = "logout", required = false) String logout)
+			@RequestParam(value = "logout", required = false) String logout, HttpServletRequest request)
 	{
-		String username=p.getName();
-		
+		String email=p.getName();
+		User user1 = userDAO.getByEmail(email);
+		String username = user1.getUsername();
+		String usersId = user1.getUsersId();
+		// request.getSession().setAttribute("username", username);
 		
 		User user = userDAO.get(username);
 		model.addAttribute("username", username);
-	
+		model.addAttribute("usersId", usersId);
+		
 		long count = cartDAO.getCount(username);
 		model.addAttribute("numberOfProduct", count);
 		

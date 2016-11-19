@@ -1,29 +1,29 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
-<h2>Product</h2>
+<h2>Supplier</h2>
 
 
 <form:form action="../editSupplier" method="post">
 	<table>
 		<tr>
 			<td>Supplier ID:</td>
-			<td><input type="text" name="id" value="${supplier.id}"></td>
+			<td><input class="form-control" type="text" name="id" value="${supplier.id}"></td>
 		</tr>
 		<tr>
 			<td>Supplier Name:</td>
-			<td><input type="text" name="name" value="${supplier.name}"></td>
+			<td><input class="form-control" type="text" name="name" value="${supplier.name}"></td>
 		</tr>
 		<tr>
 			<td>Supplier PhoneNo:</td>
-			<td><input type="text" name=phoneNo value="${supplier.phoneNo}"></td>
+			<td><input class="form-control" type="text" name=phoneNo value="${supplier.phoneNo}"></td>
 		</tr>
 		<tr>
 			<td>Supplier EmailId:</td>
-			<td><input type="text" name="emailId" value="${supplier.emailId}"></td>
+			<td><input class="form-control" type="text" name="emailId" value="${supplier.emailId}"></td>
 		</tr>
 		<tr>
 			<td>Supplier Address:</td>
-			<td><input type="text" name="address" value="${supplier.address}"></td>
+			<td><input class="form-control" type="text" name="address" value="${supplier.address}"></td>
 		</tr>
 		
 		<tr>

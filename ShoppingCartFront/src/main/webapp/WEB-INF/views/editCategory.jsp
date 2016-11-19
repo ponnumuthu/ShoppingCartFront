@@ -1,7 +1,7 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@include file="/WEB-INF/views/header.jsp" %>
-<h2 style="font-family: magneto" >Edit Category</h2>
+<h2 style="font-family: magneto;" align="center" >Edit Category</h2>
 
 	<form:form action="../editCategory" method="post">
 		<table align="center" class="col-lg-8 col-lg-offset-1 col-sm-7 col-sm-offset-1">

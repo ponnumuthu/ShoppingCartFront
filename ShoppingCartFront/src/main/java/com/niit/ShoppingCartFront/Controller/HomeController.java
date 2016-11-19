@@ -15,11 +15,15 @@ import org.springframework.web.servlet.ModelAndView;
 import com.niit.shoppingcartback.dao.CartDAO;
 import com.niit.shoppingcartback.dao.CategoryDAO;
 import com.niit.shoppingcartback.dao.ProductDAO;
+import com.niit.shoppingcartback.dao.ShippingAddressDAO;
 import com.niit.shoppingcartback.dao.UserDAO;
+import com.niit.shoppingcartback.dao.UserRoleDAO;
 import com.niit.shoppingcartback.model.Cart;
 import com.niit.shoppingcartback.model.Category;
 import com.niit.shoppingcartback.model.Product;
+import com.niit.shoppingcartback.model.ShippingAddress;
 import com.niit.shoppingcartback.model.User;
+import com.niit.shoppingcartback.model.UserRole;
 
 @Controller
 public class HomeController {
@@ -27,6 +31,18 @@ public class HomeController {
 	@Autowired(required = true)
 	private UserDAO userDAO;
 
+	@Autowired
+	private User user;
+	
+	@Autowired
+	private UserRoleDAO userRoleDAO;
+	
+	@Autowired
+	private UserRole userRole;
+	
+	@Autowired
+	private ShippingAddressDAO shippingAddressDAO;
+	
 	@Autowired
 	private CartDAO cartDAO;
 
@@ -51,15 +67,25 @@ public class HomeController {
 		List<Category> CategoryList = categoryDAO.list();
 		List<Product> List = productDAO.list(); 
 		mv.addObject("productList",List);
-		mv.addObject("categoryList",CategoryList);
+		mv.addObject("categoryList",CategoryList);	
 		return mv;
 		
 	}
 
 
 	@RequestMapping("/loginpage")
-	public ModelAndView loginpage() {
+	public ModelAndView loginpage(@RequestParam(value = "error", required = false) String error, 
+			@RequestParam(value = "logout", required = false) String logout, Model model) {
 		ModelAndView mv = new ModelAndView("home");
+		
+		if(error != null) {
+			model.addAttribute("error", "Username or Password Incorrect");
+			}
+		
+		if(logout != null) {
+			model.addAttribute("logout", "Logged out Successfully");
+			}
+		
 		mv.addObject("isLoginClicked", true);
 		return mv;
 	}
@@ -87,7 +113,7 @@ public class HomeController {
 	 */
 
 	@RequestMapping("/newuser")
-	public ModelAndView registerUser(@ModelAttribute User user, @RequestParam(value = "emailid") String email, ModelMap model) {
+	public ModelAndView registerUser(@ModelAttribute User user, @ModelAttribute ShippingAddress shippingAddress,@RequestParam(value = "emailid") String email, ModelMap model) {
 		ModelAndView mv ;
 		String message;
 	
@@ -99,7 +125,31 @@ public class HomeController {
 			message = "Your Email Id All Ready Registered";
 		}
 		else {
-			userDAO.saveOrUpdate(user);
+			
+			/*user.setShippingAddress(shippingAddress);
+			shippingAddress.setUser(user);*/
+				user.setEnabled(true);
+				userRole.setEmailid(user.getEmailid());
+				userRole.setPhoneNo(user.getPhoneNo());
+				userRole.setUsername(user.getUsername());
+				
+				userRole.setRoleId("10");
+				userRole.setRole("ROLE_USER");
+				
+				user.setUserRole(userRole);
+				userRole.setUser(user);
+				
+				userDAO.saveOrUpdate(user);
+				userRoleDAO.saveOrUpdate(userRole);
+			
+				model.addAttribute("User", user);
+				//model.addAttribute("isSignUpClicked", true);
+				// TODO Auto-generated catch block
+				
+			
+			
+			shippingAddress.setUsersId(user.getUsersId());
+			shippingAddressDAO.saveOrUpdate(shippingAddress);
 			model.addAttribute("isLoginClicked", true);
 			message = "Your Have Successfully Registered";
 		}
@@ -125,5 +175,6 @@ public class HomeController {
 	public void commonToProduct(Model model){
 		 List<Category> CategoryList = categoryDAO.list();
 		 model.addAttribute("categoryList",CategoryList);
+		
 	}
 }

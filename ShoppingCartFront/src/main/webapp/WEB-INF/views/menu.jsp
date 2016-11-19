@@ -1,10 +1,10 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <c:if test="${not empty isLoggedInUser || not empty isLoggedInAdmin}">
-<marquee width="25%"><h4  style="text-align:left;float:left;">Welcome ${username}!!</h4></marquee> 
-<h4 style="text-align:right;float:right;"><b>${msg}</b></h4>
+<marquee width="25%"><h4  style="text-align:left;float:left;">Welcome ${username}, ${usersId}!!</h4></marquee> 
+<h4 style="text-align:right;float:right;"><b>${msg}</b></h4> 
 <!-- <hr style="clear:both;"/> -->
-</c:if>
+</c:if> 
 
 <style>
 .blink {
@@ -38,10 +38,9 @@
 		<div class="container-fluid">
 			<ul class="nav navbar-nav">
 				<li class="active"><a class="blink" href="#">Electronics Hub</a></li> 	
-				<li><input type="home" value="Next" class="btn btn-primary" name="_eventId_home" />
-</li>
-				<li><a href="">About</a></li>
 				
+				<!-- <li><a href="">About</a></li>
+				 -->
 			</ul>
 		
 			<c:choose>
@@ -64,7 +63,7 @@
 		
 			<c:when test="${not empty isLoggedInAdmin || not empty isLoggedInUser }">
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="logout"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>	</ul>
+				<li><a href="../j_spring_security_logout"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>	</ul>
 				
 			<c:if test="${not empty isLoggedInUser }">
 				<ul class="nav navbar-nav navbar-right"> 
@@ -72,11 +71,11 @@
 				<li><a href="myCart/${username}"><span class="glyphicon glyphicon-shopping-cart "></span>MyCart(${numberOfProduct})</a></li>	</ul>
 			</c:if>
 			
-			<c:if test="${not empty isLoggedInAdmin }">
+			<%-- <c:if test="${not empty isLoggedInAdmin }">
 				<ul class="nav navbar-nav navbar-right"> 
 			
 				<li><a href="#"><span class="glyphicon glyphicon-shopping-cart "></span>manageCategory</a></li>	</ul>
-			</c:if>
+			</c:if> --%>
 			</c:when>
 			
 			<c:otherwise>
