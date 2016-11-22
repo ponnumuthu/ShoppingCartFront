@@ -38,11 +38,10 @@ function goBack() {
 	</tr>
 	<c:forEach items="${cartList}" var="cart" varStatus="status">
 		<tr>
-			<td>${status.count}</td>
-			
+			<td>${status.count}</td>			
 			<td>${cart.productName}</td>		
 			<td>${cart.quantity}</td>
-				<td>${cart.price}</td>
+			<td>${cart.price}</td>
 			<td>${cart.total}</td>
 			<td><a href="../deletecart/${username}/${cart.cartId}">delete</a></td>
 		</tr>

@@ -1,7 +1,7 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@include file="/WEB-INF/views/header.jsp" %>
 <div style="margin-right:30%" align="center">
-	<form:form class="form-group" action="../cardPayment/${username}">
+	<form:form class="form-group" action="../cardPayment/${username}" onsubmit="return formCreditCard()">
 
 		<table align="center">
 			<tr>
@@ -10,13 +10,13 @@
 			<tr>
 				<td>Name on Card</td>
 				<td>:</td>
-				<td><input class="form-control" type="text" name="nameOnCard" id="creditcard"/>
+				<td><input class="form-control" type="text" name="nameOnCard" id="nameOnCard"/>
 				<td>
 			</tr>
 			<tr>
 				<td>Card Number</td>
 				<td>:</td>
-				<td><input class="form-control" type="text" name="cardNumber" id="creditcard"/></td>
+				<td><input class="form-control" type="text" name="cardNumber" id="cardNumber"/></td>
 			</tr>
 			<tr>
 				<td>Expiration Date</td>
@@ -42,7 +42,7 @@
 			<tr>
 				<td>Card CVV</td>
 				<td>:</td>
-				<td><input class="form-control" type="password" name="cvv" id="creditcard"/>
+				<td><input class="form-control" type="password" name="cvv" id="password"/>
 			</tr>
 			<tr>
 				<td colspan="3" align="center"><input type="submit"

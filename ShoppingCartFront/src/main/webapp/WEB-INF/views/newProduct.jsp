@@ -1,7 +1,7 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<h2>NewProduct</h2>
+<h2 style="font-family: magneto; margin-left: 5em;" align="left" >NewProduct</h2>
 
 <form:form action="newProduct" method="post" enctype="multipart/form-data" >
 	<table align="center" class="col-lg-8 col-lg-offset-1 col-sm-7 col-sm-offset-1">
@@ -30,7 +30,7 @@
 		<tr>
 			<td>Product Supplier:</td>
 			<td>
-			<select style="width: 50%;" class="form-control" name="supplier_Name">
+			<select style="width: 50%;" class="form-control" name="supplier_Name" required>
 			
 			<option>Select Supplier</option>
 			<c:forEach items="${supplierList}" var="supplier">					

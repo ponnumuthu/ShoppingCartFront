@@ -43,6 +43,27 @@
 
 	}
 
+	function formCreditCard() {
+		
+		var nameOnCard = document.getElementById('nameOnCard');
+		var cardNumber = document.getElementById('cardNumber');
+		var password = document.getElementById('password');
+		if (notEmpty(nameOnCard, "Card Name Should not be empty")) {
+			if (isAlphabet(nameOnCard, "Please enter only letters for Card Name")) {	
+				if (notEmpty(cardNumber, "Card Number Should not be empty")) {
+					if (isNumeric(cardNumber, "Please enter only number for cardNumber")) {
+						if (notEmpty(password, "CVV Should not be empty")) {
+							if (isNumeric(password, "Please enter only number for CVV")) {
+								return true;
+							}
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
 	function formRegister() {
 		// Make quick references to our fields
 		var firstname = document.getElementById('first');
@@ -240,7 +261,7 @@ table {
 input[type=text], input[type=password], input[type=email], select {
 	width: 50%;
 }
-#creditcard{
+#password, #cardNumber, #nameOnCard{
 width: 107%;
 }
  div.address{
